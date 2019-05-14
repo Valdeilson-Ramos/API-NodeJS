@@ -1,17 +1,16 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-//const mogoose = require("mongoose");
+const mongoose = require("mongoose");
 
-/*mongoose.connect("localhost:27017", {
-    useNewUrlParser: true
-});
-*/
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(require("./src/routes"));
+app.use(express.json());
+mongoose.connect("mongodb://localhost:27017/noderest", {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+});
 
-require("./controllers/authController")(app);
+require("./models/User");
+app.use(require("./routes"));
 
 app.listen(3000);
